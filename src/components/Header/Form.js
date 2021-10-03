@@ -1,8 +1,8 @@
 import React, { useRef, useContext } from 'react';
 import styled from 'styled-components';
 import env from '../../env.json';
-import Icons from '../Styled/Icons';
-import { HeaderContext } from './HeaderContext';
+import { PlusIcon } from '../Icons/Icons';
+import { Context } from './Context';
 import { useDispatch } from 'react-redux';
 import { addNewTodo } from '../store/todoSlice';
 
@@ -58,7 +58,7 @@ const Form = () => {
     const {
         emptyColor: { setEmptyColor },
         userForm: { form, setForm }
-    } = useContext(HeaderContext);
+    } = useContext(Context);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -95,7 +95,7 @@ const Form = () => {
                     ref={inputRef}
                 />
             <Button>
-                <Icons name="plus" width={40} height={40}/>
+                <PlusIcon name="Добавить" color2={env.colors.placeholder} width={40} height={40}/>
             </Button>
         </FormWrap>
     );

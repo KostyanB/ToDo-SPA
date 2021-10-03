@@ -1,14 +1,31 @@
 import React from 'react';
-import styled from 'styled-components';
-import TodoItem from './TodoItem';
-
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+import env from '../../env.json';
+import TodoItem from './TodoItem';
 import { selectAllTodos } from '../store/todoSlice';
 
 const Container = styled.div`
     width: 100%;
-    padding: 15px;
+    height: calc(100vh - 80px);
+    padding: 5px 0;
+    overflow: hidden;
+    position: relative;
     margin-top: 80px;
+    float: left;
+`;
+const ListWrap = styled.div`
+    padding: 15px;
+    overflow-y: auto;
+    height: 100%;
+
+    ::-webkit-scrollbar {
+        width: 15px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: ${env.colors.valid};
+        border-radius: 100px;
+    }
 `;
 const List = styled.ul`
     width: 100%;
@@ -34,8 +51,8 @@ const CompleteList = styled(List)`
     :before {
         content: '';
         width: 150px;
-        height: 1px;
-        background: #d8e5e0;
+        height: 2px;
+        background: ${env.colors.valid};
         position: absolute;
         top: 30px;
         left: 50%;
@@ -53,16 +70,18 @@ const TodoList = () => {
 
     return (
         <Container>
-            <MainList>
-                {noCompletedTodos.map(item =>
-                    <TodoItem key={item.id} id={item.id} text={item.title} completed={false}/>
-                )}
-            </MainList>
-            <CompleteList>
-                {completedTodos.map(item =>
-                    <TodoItem key={item.id} id={item.id} text={item.title} completed={true}/>
-                )}
-            </CompleteList>
+            <ListWrap>
+                <MainList>
+                    {noCompletedTodos.map(item =>
+                        <TodoItem key={item.id} id={item.id} text={item.title} completed={false}/>
+                    )}
+                </MainList>
+                <CompleteList>
+                    {completedTodos.map(item =>
+                        <TodoItem key={item.id} id={item.id} text={item.title} completed={true}/>
+                    )}
+                </CompleteList>
+            </ListWrap>
         </Container>
     );
 }

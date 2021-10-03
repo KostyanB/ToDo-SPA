@@ -1,18 +1,17 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import env from '../../env.json';
-import Icons from '../Styled/Icons';
+import { TrashIcon, CheckIcon, UncheckIcon } from '../Icons/Icons';
 
-import { deleteTodo, editTodo, toggleStatus } from '../store/todoSlice';
-
+import { deleteTodo, toggleStatus } from '../store/todoSlice';
 
 const Nav = styled.nav`
-    width: 120px;
     height: 50px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
 `;
 const Btn = styled.button`
     height: 100%;
@@ -25,7 +24,7 @@ const Btn = styled.button`
         content: '';
         width: 2px;
         height: 30px;
-        background: #edf0f1;
+        background: ${env.colors.valid};
         position: absolute;
         top: 10px;
         left: -10px;
@@ -34,22 +33,29 @@ const Btn = styled.button`
 
 const TodoNav = ({ id, text, completed }) => {
 
+    const { valid, placeholder } = env.colors;
+
     const dispatch = useDispatch();
-    const removeBtn = useRef(),
-        completeBtn = useRef(),
-        editBtn = useRef();
 
     const remover = () => dispatch(deleteTodo(id));
-    const completer = () => {
-        dispatch(toggleStatus(id));
-    }
-        const editor = (id, text) => dispatch(editTodo({ id: id, text:  text }));
+    const completer = () => dispatch(toggleStatus(id));
+    // const editor = (id, text) => dispatch(editTodo({ id: id, text:  text }));
 
     return (
     <Nav key={id}>
-        <Btn onClick={editor}><Icons name="pencil" width={30} height={30}/></Btn>
-        <Btn onClick={completer}><Icons name={completed ? "check" : "uncheck"} width={30} height={30}/></Btn>
-        <Btn onClick={remover}><Icons name="trash" width={30} height={30}/></Btn>
+        {/* <Btn onClick={editor}>
+            <PencilIcon name="Редактировать" color1={valid} width={30} height={30}/>
+        </Btn> */}
+        <Btn onClick={completer}>
+            {completed ?
+                <CheckIcon name="Отменить" color1={valid} color2={placeholder} width={30} height={30}/>
+                :
+                <UncheckIcon name="Выполнить" color1={valid} width={30} height={30}/>
+            }
+        </Btn>
+        <Btn onClick={remover}>
+            <TrashIcon name="Удалить" color1={valid} width={30} height={30}/>
+        </Btn>
     </Nav>
     );
 }

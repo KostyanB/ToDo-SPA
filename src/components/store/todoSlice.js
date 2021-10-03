@@ -11,13 +11,16 @@ const todosAdapter = createEntityAdapter();
 // получение с сервера
 export const fetchTodos = createAsyncThunk(
     'todos/fetchTodos',
-    async (_, rejectWithValue) => {
+    async (_, {rejectWithValue, dispatch}) => {
         try {
-            // задан
             const response = await fetch(`${dbUrl}?_limit=${limit}`);
+
             if(!response.ok) throw new Error('Server error');
+
             const result = await response.json();
+            dispatch(setTodo(result));
             return result;
+
         } catch (error) {
             return rejectWithValue(error.message);
         }
@@ -47,8 +50,6 @@ export const toggleStatus = createAsyncThunk(
     // for edit use in App dispatch(toggleStatus(id))
     'todos/toggleStatus',
     async (id, {rejectWithValue, dispatch, getState}) => {
-        console.log('id: ', id);
-
         const todo = getState().todos.entities[id];
 
         try {
@@ -135,6 +136,7 @@ const setError = (state, action) => {
     state.status = 'rejected';
     state.error = action.payload;
 };
+
 // ******************************************
 // создаем slice
 const todoSlice = createSlice({
@@ -144,6 +146,8 @@ const todoSlice = createSlice({
         error: initError
     }),
     reducers: {
+        setTodo: todosAdapter.setAll,
+        // use: dispatch(setTodo)
         addTodo: todosAdapter.addOne,
         // use: dispatch(addTodo({ id: id, ... all added fields: 'values' }))
         removeTodo: todosAdapter.removeOne,
@@ -156,10 +160,9 @@ const todoSlice = createSlice({
             state.status = 'loading';
             state.error = null;
         },
-        [ fetchTodos.fulfilled ]: (state, action) => {
+        [ fetchTodos.fulfilled ]: state => {
             state.status = 'success';
             state.error = null;
-            todosAdapter.setAll(state, action.payload);
         },
         [ fetchTodos.rejected ]: setError,
         [ deleteTodo.rejected ]: setError,
@@ -169,7 +172,7 @@ const todoSlice = createSlice({
     }
 })
 
-export const { addTodo, removeTodo, editTitle, toggleComplete, updateTodo } = todoSlice.actions;
+export const { setTodo, addTodo, removeTodo, editTitle, toggleComplete, updateTodo } = todoSlice.actions;
 
 export const {
     selectIds: selectTodosIds,

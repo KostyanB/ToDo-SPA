@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import env from '../../env.json';
 
 import TodoNav from './TodoNav';
 
@@ -17,7 +18,7 @@ const Item = styled.li`
     background: #fff;
     border-radius: 5px;
     position: relative;
-    box-shadow: 0 1px 2px rgba(44, 62, 80, 0.10);
+    box-shadow: 0 1px 2px ${env.colors.valid};
     margin: 0 0 10px 0;
     padding: 14px;
     word-break: break-word;

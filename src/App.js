@@ -1,57 +1,31 @@
 import React, { useEffect } from 'react';
-import './App.scss';
 import { GlobalStyle } from './components/Styled/GlobalStyle';
-import { Context } from './components/functions/Context';
 import { useDispatch, useSelector } from 'react-redux';
-// import { BrowserRouter as Router, Switch, Route, Link, useParams } from 'react-router-dom';
 
 import Header from './components/Header';
 import TodoList from './components/TodoList';
+import { Preloader, ErrorLoad } from './components/Styled/Preloader';
 
-
-import { fetchTodos,
-    selectTodosEntities,
-    selectAllTodos,
-    addNewTodo,
-    deleteTodo,
-    editTodo,
-    toggleStatus,
-    updateTodo
-  } from './components/store/todoSlice';
+import { fetchTodos, selectStatus, selectError } from './components/store/todoSlice';
 
 
 function App() {
-  const dispatch = useDispatch();
-  const entities = useSelector(selectTodosEntities);
-
+  const dispatch = useDispatch(),
+    status = useSelector(selectStatus),
+    error = useSelector(selectError);
   // get todos
   useEffect(() => {
     dispatch(fetchTodos());
   }, [dispatch]);
 
-  // todo handlers
-  const remover = () => dispatch(deleteTodo(4));
-  const adder = () => dispatch(addNewTodo('new todo text'));
-  const completer = () => dispatch(toggleStatus(1));
-  // const completer = () => dispatch(updateTodo({id: 1, changes: { completed: !entities[1].completed }}));
-  const editor = () => dispatch(editTodo({ id: 1, text:  'new text todododo' }));
-  //const editor = () => dispatch(updateTodo({ id: 1, changes: { title: 'new text todododo' } }))
-
   return (
-    <Context.Provider value={{
-
-    }}>
+    <>
       <GlobalStyle/>
-      {/* <div className="App"> */}
         <Header/>
         <TodoList/>
-        {/* <button onClick={remover}>delete</button>
-        <button onClick={adder}>add</button>
-        <button onClick={completer}>complete</button>
-        <button onClick={editor}>edit</button> */}
-
-      {/* </div> */}
-    </Context.Provider>
+        {error && <ErrorLoad>Упс! Ошибка "{error}"</ErrorLoad>}
+        {(status === 'loading') && <Preloader/>}
+    </>
   );
 }
 export default App;

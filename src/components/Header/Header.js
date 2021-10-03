@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import env from '../../env.json';
 import { useEmptyColor } from './hooks/useEmptyColor';
 import { useForm } from './hooks/useForm';
-import { HeaderContext } from './HeaderContext';
+import { Context } from './Context';
 import Form from './Form';
 
 const Wrapper = styled.header`
@@ -14,8 +14,8 @@ const Wrapper = styled.header`
     z-index: 5;
     background-color: ${env.colors.valid};
     box-shadow: 0 2px 4px ${env.colors.shadow};
-    /* border-bottom-right-radius: 10px; */
-    /* border-bottom-left-radius: 10px; */
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
 `;
 
 const Header = () => {
@@ -23,14 +23,14 @@ const Header = () => {
     const userForm = useForm();
 
     return (
-        <HeaderContext.Provider value={{
+        <Context.Provider value={{
             emptyColor,
             userForm
         }}>
             <Wrapper className={emptyColor.emptyColor}>
                 <Form/>
             </Wrapper>
-        </HeaderContext.Provider>
+        </Context.Provider>
     )
 }
 export default Header;
