@@ -14,8 +14,8 @@ const Wrapper = styled.header`
     z-index: 5;
     background-color: ${env.colors.valid};
     box-shadow: 0 2px 4px ${env.colors.shadow};
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
+    /* border-bottom-right-radius: 10px; */
+    /* border-bottom-left-radius: 10px; */
 `;
 
 const Header = () => {

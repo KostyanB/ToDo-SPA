@@ -47,6 +47,7 @@ export const toggleStatus = createAsyncThunk(
     // for edit use in App dispatch(toggleStatus(id))
     'todos/toggleStatus',
     async (id, {rejectWithValue, dispatch, getState}) => {
+        console.log('id: ', id);
 
         const todo = getState().todos.entities[id];
 
@@ -54,7 +55,7 @@ export const toggleStatus = createAsyncThunk(
             const response = await fetch(`${dbUrl}/${id}`, {
                 method: 'PATH',
                 headers: {
-                    'Content-type': 'application/json'
+                    'Content-type': 'application/json; charset=UTF-8'
                 },
                 body: JSON.stringify({
                     completed: !todo.completed,

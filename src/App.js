@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { BrowserRouter as Router, Switch, Route, Link, useParams } from 'react-router-dom';
 
 import Header from './components/Header';
-import Main from './components/Main';
+import TodoList from './components/TodoList';
 
 
 import { fetchTodos,
@@ -42,14 +42,15 @@ function App() {
 
     }}>
       <GlobalStyle/>
-      <div className="App">
+      {/* <div className="App"> */}
         <Header/>
-        <button onClick={remover}>delete</button>
+        <TodoList/>
+        {/* <button onClick={remover}>delete</button>
         <button onClick={adder}>add</button>
         <button onClick={completer}>complete</button>
-        <button onClick={editor}>edit</button>
+        <button onClick={editor}>edit</button> */}
 
-      </div>
+      {/* </div> */}
     </Context.Provider>
   );
 }
