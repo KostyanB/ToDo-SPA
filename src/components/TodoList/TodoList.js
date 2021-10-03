@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import env from '../../env.json';
 import TodoItem from './TodoItem';
 
 import { useSelector } from 'react-redux';

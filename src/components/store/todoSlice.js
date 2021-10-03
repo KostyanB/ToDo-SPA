@@ -53,7 +53,7 @@ export const toggleStatus = createAsyncThunk(
 
         try {
             const response = await fetch(`${dbUrl}/${id}`, {
-                method: 'PATH',
+                method: 'PATCH',
                 headers: {
                     'Content-type': 'application/json; charset=UTF-8'
                 },
