@@ -30,7 +30,7 @@ export const UncheckIcon = ({ name, color1, width, height }) => (
     </IconStyle>
 )
 
-export const PencilIcon = ({ name, color1, width, height }) => (
+export const EditIcon = ({ name, color1, width, height }) => (
     <IconStyle viewBox="0 0 469.336 469.336" fill="none" width={width} height={height} x="0px" y="0px">
         <title>{name}</title>
         <g>
@@ -52,5 +52,12 @@ export const PlusIcon = ({ name, color2, width, height }) => (
         <title>{name}</title>
         <path d="m256 0c-141.164062 0-256 114.835938-256 256s114.835938 256 256 256 256-114.835938 256-256-114.835938-256-256-256zm0 0"></path>
         <path fill={color2} d="m368 277.332031h-90.667969v90.667969c0 11.777344-9.554687 21.332031-21.332031 21.332031s-21.332031-9.554687-21.332031-21.332031v-90.667969h-90.667969c-11.777344 0-21.332031-9.554687-21.332031-21.332031s9.554687-21.332031 21.332031-21.332031h90.667969v-90.667969c0-11.777344 9.554687-21.332031 21.332031-21.332031s21.332031 9.554687 21.332031 21.332031v90.667969h90.667969c11.777344 0 21.332031 9.554687 21.332031 21.332031s-9.554687 21.332031-21.332031 21.332031zm0 0"></path>
+    </IconStyle>
+)
+
+export const ShareIcon = ({ name, color1, width, height }) => (
+    <IconStyle viewBox="0 -22 512 511" fill="none" width={width} height={height}>
+        <title>{name}</title>
+        <path fill={color1} d="m512 233.820312-212.777344-233.320312v139.203125h-45.238281c-140.273437 0-253.984375 113.710937-253.984375 253.984375v73.769531l20.09375-22.019531c68.316406-74.851562 164.980469-117.5 266.324219-117.5h12.804687v139.203125zm0 0"/>
     </IconStyle>
 )

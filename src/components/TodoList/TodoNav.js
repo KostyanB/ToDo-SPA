@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import env from '../../env.json';
-import { TrashIcon, CheckIcon, UncheckIcon } from '../Icons/Icons';
+import { TrashIcon, CheckIcon, UncheckIcon, EditIcon, ShareIcon } from '../Icons/Icons';
 
 import { deleteTodo, toggleStatus } from '../store/todoSlice';
 
@@ -12,6 +12,7 @@ const Nav = styled.nav`
     justify-content: space-between;
     align-items: center;
     gap: 10px;
+    padding-left: 15px;
 `;
 const Btn = styled.button`
     height: 100%;
@@ -19,19 +20,9 @@ const Btn = styled.button`
     justify-content: space-between;
     align-items: center;
     position: relative;
-
-    :first-of-type:before {
-        content: '';
-        width: 2px;
-        height: 30px;
-        background: ${env.colors.valid};
-        position: absolute;
-        top: 10px;
-        left: -10px;
-    }
 `;
 
-const TodoNav = ({ id, text, completed }) => {
+const TodoNav = ({ id, completed, handleDisableEdit, disableEdit, handleEdit }) => {
 
     const { valid, placeholder } = env.colors;
 
@@ -39,13 +30,19 @@ const TodoNav = ({ id, text, completed }) => {
 
     const remover = () => dispatch(deleteTodo(id));
     const completer = () => dispatch(toggleStatus(id));
-    // const editor = (id, text) => dispatch(editTodo({ id: id, text:  text }));
 
     return (
     <Nav key={id}>
-        {/* <Btn onClick={editor}>
-            <PencilIcon name="Редактировать" color1={valid} width={30} height={30}/>
-        </Btn> */}
+        { disableEdit &&
+            <Btn onClick={handleDisableEdit}>
+                <EditIcon name="Редактировать" color1={valid} width={30} height={30}/>
+            </Btn>
+        }
+        { !disableEdit &&
+            <Btn type="submit" form="todo_form" onClick={handleEdit}>
+                <ShareIcon name="Отправить" color1={valid} width={30} height={30}/>
+            </Btn>
+        }
         <Btn onClick={completer}>
             {completed ?
                 <CheckIcon name="Отменить" color1={valid} color2={placeholder} width={30} height={30}/>

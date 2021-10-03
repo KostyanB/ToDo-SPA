@@ -80,7 +80,7 @@ export const editTodo = createAsyncThunk(
     async ({id, text}, {rejectWithValue, dispatch}) => {
         try {
             const response = await fetch(`${dbUrl}/${id}`, {
-                method: 'PATH',
+                method: 'PATCH',
                 headers: {
                     'Content-type': 'application/json'
                 },
