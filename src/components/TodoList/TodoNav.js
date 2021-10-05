@@ -22,7 +22,7 @@ const Btn = styled.button`
     position: relative;
 `;
 
-const TodoNav = ({ id, completed, handleDisableEdit, disableEdit, handleEdit }) => {
+const TodoNav = ({ id, completed, handleDisableEdit, disableEdit, form }) => {
 
     const { valid, placeholder } = env.colors;
 
@@ -39,7 +39,7 @@ const TodoNav = ({ id, completed, handleDisableEdit, disableEdit, handleEdit }) 
             </Btn>
         }
         { !disableEdit &&
-            <Btn type="submit" form="todo_form" onClick={handleEdit}>
+            <Btn type="submit" form={form}>
                 <ShareIcon name="Отправить" color1={valid} width={30} height={30}/>
             </Btn>
         }

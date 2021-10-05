@@ -21,7 +21,7 @@ const Item = styled.li`
     margin: 0 0 10px 0;
     padding: 14px;
 
-    :last-of-type {
+    &:last-of-type {
         margin: 0;
     }
 `;
@@ -46,7 +46,7 @@ const TodoItem = ({ id, text, completed }) => {
     const [ inputValue, setInputValue ] = useState(text);
 
     const dispatch = useDispatch();
-    const input = useRef();
+    const input = useRef(null);
 
     useEffect(() => setInputValue(text), [text]);
     // отправка для редактирования
@@ -69,13 +69,16 @@ const TodoItem = ({ id, text, completed }) => {
         setInputValue(e.target.value)
     };
 
+    const focusInput = () => input.current.focus();
+
     const handleDisableEdit = () => {
         setDisableEdit(false);
+        focusInput();
     };
 
     return (
         <Item>
-            <Form onSubmit={handleEdit} id="todo_form">
+            <Form onSubmit={handleEdit} id={`todo_form${id}`}>
                 <Text ref={input}
                     value={inputValue}
                     disabled={disableEdit}
@@ -87,10 +90,10 @@ const TodoItem = ({ id, text, completed }) => {
                 completed={completed}
                 handleDisableEdit={handleDisableEdit}
                 disableEdit={disableEdit}
-                handleEdit={handleEdit}
+                form={`todo_form${id}`}
+                input={input}
             />
         </Item>
-
     );
 }
 export default TodoItem;
