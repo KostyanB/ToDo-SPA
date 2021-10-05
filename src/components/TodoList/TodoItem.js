@@ -2,10 +2,15 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import env from '../../env.json';
+// import { useDisableEdit } from './useDisableEdit';
 // store
 import { editTodo } from '../store/todoSlice';
 //components
-import TodoNav from './TodoNav';
+// import TodoNav from './TodoNav';
+import NavStyle from './NavStyle';
+import NavBtnEdit from './NavBtnEdit';
+import NavBtnComplete from './NavBtnComplete';
+import NavBtnDelete from './NavBtnDelete';
 
 // styled components
 const Item = styled.li`
@@ -41,7 +46,8 @@ const Form = styled.form`
 
 //********************************
 const TodoItem = ({ id, text, completed }) => {
-
+    // const { disableEdit, setDisableEdit } = useDisableEdit();
+    // console.log('disableEdit: ', disableEdit);
     const [ disableEdit, setDisableEdit ] = useState(true);
     const [ inputValue, setInputValue ] = useState(text);
 
@@ -69,11 +75,12 @@ const TodoItem = ({ id, text, completed }) => {
         setInputValue(e.target.value)
     };
 
-    const focusInput = () => input.current.focus();
+    // const focusInput = () => input.current.focus();
 
     const handleDisableEdit = () => {
         setDisableEdit(false);
-        focusInput();
+        input.current.focus();
+        // focusInput();
     };
 
     return (
@@ -86,13 +93,18 @@ const TodoItem = ({ id, text, completed }) => {
                     onBlur={handleEdit}
                 />
             </Form>
-            <TodoNav id={id}
+            {/* <TodoNav id={id}
                 completed={completed}
                 handleDisableEdit={handleDisableEdit}
                 disableEdit={disableEdit}
                 form={`todo_form${id}`}
                 input={input}
-            />
+            /> */}
+            <NavStyle key={`nav${id}`}>
+                <NavBtnEdit form={`todo_form${id}`} input={input} handleDisableEdit={handleDisableEdit} disableEdit={disableEdit}/>
+                <NavBtnComplete id={id} completed={completed}/>
+                <NavBtnDelete id={id}/>
+            </NavStyle>
         </Item>
     );
 }

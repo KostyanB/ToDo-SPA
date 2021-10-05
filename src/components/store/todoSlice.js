@@ -143,7 +143,9 @@ const todoSlice = createSlice({
     name: 'todos',
     initialState: todosAdapter.getInitialState({
         status: initStatus,
-        error: initError
+        error: initError,
+        completed: [],
+        uncompleted: [],
     }),
     reducers: {
         setTodo: todosAdapter.setAll,
@@ -160,9 +162,11 @@ const todoSlice = createSlice({
             state.status = 'loading';
             state.error = null;
         },
-        [ fetchTodos.fulfilled ]: state => {
+        [ fetchTodos.fulfilled ]: (state, action) => {
             state.status = 'success';
             state.error = null;
+            state.uncompleted = action.payload.filter(item => !item.completed);
+            state.completed = action.payload.filter(item => item.completed);
         },
         [ fetchTodos.rejected ]: setError,
         [ deleteTodo.rejected ]: setError,
